@@ -1,6 +1,7 @@
 package com.mma.gestion.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +16,5 @@ public class StudentSummaryDTO {
     private long vencidos;
     private long sinPagos;
     private BigDecimal totalMes;
+    private List<ChartDataDTO> chartData; // Nueva propiedad para los datos del gráfico
 }

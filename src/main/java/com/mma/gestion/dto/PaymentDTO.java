@@ -24,4 +24,8 @@ public class PaymentDTO {
     private String period;
 
     private Long studentId;
+
+    String studentName;
+
+    private String planName;
 }

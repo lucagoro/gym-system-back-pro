@@ -1,14 +1,19 @@
 package com.mma.gestion.entity;
 
-import com.mma.gestion.Plan;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +37,27 @@ public class Student {
     @Column(unique = true, nullable = false)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    private Plan plan = Plan.MENSUAL;
+    @Column(unique = true)
+    private String email;
 
-    
+    private String dni;
+
+    private LocalDate registrationDate = LocalDate.now();
+
+    private LocalDate dueDate; // Esta fecha se actualiza cada vez que paga
+
+    private boolean active = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id")
+    private Plan plan; 
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Payment> payments = new ArrayList<>();
+
+    // Relación con Gym
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gym_id")
+    private Gym gym;
+
 }
