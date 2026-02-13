@@ -1,12 +1,12 @@
 package com.mma.gestion.service;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,14 @@ import com.mma.gestion.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-    // Esta es la firma secreta del token. En producción debe ser una variable de entorno.
-    private static final String SECRET_KEY = "tu_clave_secreta_super_larga_y_segura_para_el_sistema_pro";
+
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
     public String generateToken(User user) {
     Map<String, Object> extraClaims = new HashMap<>();
@@ -34,16 +36,16 @@ public class JwtService {
             .setClaims(extraClaims)
             .setSubject(user.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12)) // 12 horas de validez
             .signWith(getSignInKey(), SignatureAlgorithm.HS256)
             .compact();
 }
 
     private Key getSignInKey() {
-    // Usamos Keys.hmacShaKeyFor con los bytes de la cadena directamente
-    // Esto evita el error de "Illegal base64 character"
-    return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-}
+        // Esto decodifica la cadena Base64 que generamos
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey); 
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
 public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
