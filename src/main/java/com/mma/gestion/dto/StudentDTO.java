@@ -5,16 +5,20 @@ import java.time.LocalDate;
 import com.mma.gestion.StudentStatus;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentDTO {
     private Long id;
     private String name;
     private String surname;
+    private String address;
+    private Integer age;
     private String phone;
     private String dni;
     private StudentStatus status;

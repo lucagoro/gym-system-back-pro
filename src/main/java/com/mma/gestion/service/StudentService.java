@@ -60,6 +60,8 @@ public class StudentService {
         Student student = new Student();
         student.setName(dto.getName());
         student.setSurname(dto.getSurname());
+        student.setAddress(dto.getAddress());
+        student.setAge(dto.getAge());
         student.setPhone(dto.getPhone());
         student.setDni(dto.getDni());
         student.setGym(gym); // VINCULAMOS EL ALUMNO AL GIMNASIO
@@ -87,6 +89,8 @@ public class StudentService {
 
     student.setName(dto.getName());
     student.setSurname(dto.getSurname());
+    student.setAddress(dto.getAddress());
+    student.setAge(dto.getAge());
     student.setPhone(dto.getPhone());
     student.setDni(dto.getDni());
 
@@ -174,6 +178,8 @@ public class StudentService {
             student.getId(),
             student.getName(),
             student.getSurname(),
+            student.getAddress(),
+            student.getAge(),
             student.getPhone(),
             student.getDni(),
             calculateStatus(student),

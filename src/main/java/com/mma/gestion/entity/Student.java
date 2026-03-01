@@ -32,7 +32,13 @@ public class Student {
 
     private String name;
 
-    private String surname;
+    private String surname; 
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "age")
+    private Integer age;
 
     @Column(unique = true, nullable = false)
     private String phone;
