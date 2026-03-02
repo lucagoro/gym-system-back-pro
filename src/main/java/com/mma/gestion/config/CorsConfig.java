@@ -13,7 +13,9 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                     "http://localhost:5173",
                     "http://localhost:5174",
-                    "https://gym-system-front-pro.vercel.app" 
+                    "https://gym-system-front-pro.vercel.app",
+                    "https://gymhubapp.com",           // Tu nuevo dominio oficial
+                    "https://www.gymhubapp.com"        // La versión con www de tu nuevo dominio oficial
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
